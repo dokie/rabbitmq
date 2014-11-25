@@ -10,6 +10,7 @@ MAINTAINER i2O Water <anapos@i2owater.com>
 COPY bin/rabbitmq-start /usr/local/rabbitmq/bin/rabbitmq-start
 COPY config/rabbitmq.config /etc/rabbitmq/rabbitmq.config
 COPY config/rabbitmq-env.conf /etc/rabbitmq/rabbitmq-env.conf
+COPY rpm/rabbitmq-server-3.2.4-1.noarch.rpm /tmp/rabbitmq-server-3.2.4-1.noarch.rpm
 
 # Install RabbitMQ.
 RUN yum -y update; yum clean all
@@ -17,16 +18,11 @@ RUN yum -y install wget
 RUN wget -r --no-parent -A 'epel-release-*.rpm' http://dl.fedoraproject.org/pub/epel/7/x86_64/e/
 RUN rpm -Uvh dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-*.rpm
 RUN yum -y install erlang
-RUN yum -y install http://yum.uk01.i2owater.com/repo/i2o/RPMS/x86_64/rabbitmq-server-3.2.4-1.noarch.rpm
+RUN yum -y install /tmp/rabbitmq-server-3.2.4-1.noarch.rpm
 
-#RUN rabbitmq-plugins enable rabbitmq_management
 RUN /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
-
-#RUN rabbitmq-plugins enable rabbitmq_mqtt
 RUN /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_mqtt
-
 RUN chmod +x /usr/local/rabbitmq/bin/rabbitmq-start
-
 
 # Define environment variables.
 ENV RABBITMQ_LOG_BASE /data/log
