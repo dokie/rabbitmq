@@ -25,6 +25,7 @@ RUN /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_mqtt
 RUN chmod +x /usr/local/rabbitmq/bin/rabbitmq-start
 
 # Define environment variables.
+ENV HOSTNAME rabbithost
 ENV RABBITMQ_LOG_BASE /data/log
 ENV RABBITMQ_MNESIA_BASE /data/mnesia
 
